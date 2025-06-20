@@ -78,3 +78,40 @@ class ClasesDeGimnasia inherits Actividad {
     override method implicaEsfuerzo() = true
     override method puedeBroncearse() = false
 } 
+class Socio {
+    const actividadesRealizadas = []
+    const property limiteDeActividades
+    method esAdoradorDelSol() = actividadesRealizadas.all({actividad => actividad.puedeBroncearse()})
+    method actividadesEsforzadas() = actividadesRealizadas.filter({actividad => actividad.implicaEsfuerzo()})
+    method cantActividadesRealizadas() = actividadesRealizadas.size()
+    method realizarActividad(unaActividad) {
+        if (self.cantActividadesRealizadas() > limiteDeActividades) {
+            self.error("Ya llegó al maximo de actividades que peude hacer")
+        }
+        actividadesRealizadas.add(unaActividad)
+    }
+}
+
+/*
+roque.esAdoradorDelSol() devuelve true.
+roque.actividadesEsforzadas() devuelve una colección que tiene solamente el viaje de 2000 metros de playa.
+si registramos que Roque realiza una clase de gimnasia, se debe generar un error.
+Si Ana es una socia que hizo dos viajes iguales a los que hizo Roque, pero tiene un máximo de 3 actividades,
+ entonces sí le podemos registrar una clase de gimnasia. Después de registrarla, obtenemos que Ana ya no es adoradora del sol, y su colección de actividades esforzadas incluye al viaje de 2000 metros de playa y a la clase.
+*/
+
+/*
+5. Actividades que le atraen a cada socio
+Se debe agregar al modelo la pregunta de si una actividad le atrae a un socio o no.
+Para ello, se debe agregar para cada socio, la edad,
+ y la colección de idiomas que habla (en realidad, la edad se usa recién en el punto siguiente, 
+ pero cuesta poco agregarla ahora).
+La condición depende del tipo de socio, de acuerdo a lo siguiente:
+
+si es un socio tranquilo, entonces la condición es que la actividad lleve 4 días o más.
+si es un socio coherente, entonces: si es adorador del sol, entonces la actividad debe servir para broncearse,
+ si no, debe implicar esfuerzo.
+si es un socio relajado, la condición es hablar al menos uno de los idiomas que se usan en la actividad.
+ P.ej. si un socio relajado habla español y quechua, 
+ entonces una actividad en español le va a atraer, una en quechua y aymará también, una en francés e italiano no.
+*/
