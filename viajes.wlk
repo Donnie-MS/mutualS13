@@ -1,4 +1,4 @@
-class Viaje {
+class Actividad {
     method diasQueLleva()
     const property idiomas = #{}
     method implicaEsfuerzo()
@@ -6,7 +6,7 @@ class Viaje {
     method esInteresante() = idiomas.size() > 1
 }
 
-class ViajeDePlaya inherits Viaje {
+class ViajeDePlaya inherits Actividad {
     const property largoDePlaya
     override method diasQueLleva() = largoDePlaya / 5000
     override method implicaEsfuerzo() {
@@ -19,7 +19,7 @@ class ViajeDePlaya inherits Viaje {
     override method puedeBroncearse() = true
 }
 
-class ExcursionACiudad inherits Viaje{
+class ExcursionACiudad inherits Actividad {
     const property cantAtracciones
     override method diasQueLleva() =  cantAtracciones / 2
     override method implicaEsfuerzo() {
@@ -72,3 +72,9 @@ una salida de 50 kilómetros a un lugar con 240 días de sol por año: lleva 1 d
 una salida de 250 kilómetros a un lugar con 130 días de sol por año: lleva 5 días, implica esfuerzo, y sirve para broncearse.
 */
 
+class ClasesDeGimnasia inherits Actividad {
+    override method idiomas() = #{"espaniol"}
+    override method diasQueLleva() = 1
+    override method implicaEsfuerzo() = true
+    override method puedeBroncearse() = false
+} 
