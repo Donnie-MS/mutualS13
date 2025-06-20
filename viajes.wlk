@@ -1,8 +1,9 @@
 class Viaje {
     method diasQueLleva()
-    const property idiomasQueSeUsan
+    const property idiomas = #{}
     method implicaEsfuerzo()
     method puedeBroncearse()
+    method esInteresante() = idiomas.size() > 1
 }
 
 class ViajeDePlaya inherits Viaje {
@@ -29,6 +30,7 @@ class ExcursionACiudad inherits Viaje{
         return resultado
     }
     override method puedeBroncearse() = false
+    override method esInteresante() = super() or cantAtracciones == 5
 }
 class ExcursionCiudadTropical inherits ExcursionACiudad {
     override method diasQueLleva() = super() + 1
@@ -60,9 +62,13 @@ class SalidaDeTrekking inherits ExcursionACiudad {
         }
         return resultado
     }
+    override method esInteresante() = super() and diasDeSolAlAño > 140
 }
+
+
 /*
 una salida de 100 kilómetros a un lugar con 130 días de sol por año: lleva 2 días, implica esfuerzo, y no sirve para broncearse.
 una salida de 50 kilómetros a un lugar con 240 días de sol por año: lleva 1 día, no implica esfuerzo, y sí sirve para broncearse.
 una salida de 250 kilómetros a un lugar con 130 días de sol por año: lleva 5 días, implica esfuerzo, y sirve para broncearse.
 */
+
