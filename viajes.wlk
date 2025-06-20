@@ -80,6 +80,8 @@ class ClasesDeGimnasia inherits Actividad {
 } 
 class Socio {
     const actividadesRealizadas = []
+    var property edad
+    const property idiomas = #{}
     const property limiteDeActividades
     method esAdoradorDelSol() = actividadesRealizadas.all({actividad => actividad.puedeBroncearse()})
     method actividadesEsforzadas() = actividadesRealizadas.filter({actividad => actividad.implicaEsfuerzo()})
@@ -90,7 +92,20 @@ class Socio {
         }
         actividadesRealizadas.add(unaActividad)
     }
+    method leAtrae(unaActividad)
+    method hablaAlMenosUnIdiomaDe(unaActividad) = self.idiomas().intersection(unaActividad.idiomas()).size() > 0
 }
+
+class SocioTranquilo inherits Socio {
+    override method leAtrae(unaActividad) = unaActividad.diasQueLleva() >= 4
+}
+class SocioCoherente inherits Socio {
+    override method leAtrae(unaActividad) = self.esAdoradorDelSol() or unaActividad.implicaEsfuerzo()
+}
+class SocioRelajado inherits Socio {
+    override method leAtrae(unaActividad) = self.hablaAlMenosUnIdiomaDe(unaActividad)
+}
+
 
 /*
 roque.esAdoradorDelSol() devuelve true.
@@ -100,18 +115,3 @@ Si Ana es una socia que hizo dos viajes iguales a los que hizo Roque, pero tiene
  entonces sí le podemos registrar una clase de gimnasia. Después de registrarla, obtenemos que Ana ya no es adoradora del sol, y su colección de actividades esforzadas incluye al viaje de 2000 metros de playa y a la clase.
 */
 
-/*
-5. Actividades que le atraen a cada socio
-Se debe agregar al modelo la pregunta de si una actividad le atrae a un socio o no.
-Para ello, se debe agregar para cada socio, la edad,
- y la colección de idiomas que habla (en realidad, la edad se usa recién en el punto siguiente, 
- pero cuesta poco agregarla ahora).
-La condición depende del tipo de socio, de acuerdo a lo siguiente:
-
-si es un socio tranquilo, entonces la condición es que la actividad lleve 4 días o más.
-si es un socio coherente, entonces: si es adorador del sol, entonces la actividad debe servir para broncearse,
- si no, debe implicar esfuerzo.
-si es un socio relajado, la condición es hablar al menos uno de los idiomas que se usan en la actividad.
- P.ej. si un socio relajado habla español y quechua, 
- entonces una actividad en español le va a atraer, una en quechua y aymará también, una en francés e italiano no.
-*/
