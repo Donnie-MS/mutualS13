@@ -65,8 +65,25 @@ class SalidaDeTrekking inherits ExcursionACiudad {
     }
     override method esInteresante() = super() and diasDeSolAlAño > 140
 }
+class TallerLiterario inherits Actividad {
+    const property libros = #{}
+    method initialize() {
+        idiomas.clear()
+        idiomas.addAll(libros.map({libro => libro.idioma()}))
+    }
+    override method diasQueLleva() = libros.size() + 1
+    override method implicaEsfuerzo() =
+        libros.any({libro => libro.cantPaginas() > 500}) or
+        (libros.size() > 1 and libros.map({libro => libro.nombreAutor()}).asSet().size() == 1)
+    override method puedeBroncearse() = false
+    override method esActividadRecomendadaPara(unSocio) = unSocio.idiomas().size() > 1
+}
 
-
+class Libro {
+    const property idioma 
+    const property cantPaginas
+    const property nombreAutor
+}
 /*
 una salida de 100 kilómetros a un lugar con 130 días de sol por año: lleva 2 días, implica esfuerzo, y no sirve para broncearse.
 una salida de 50 kilómetros a un lugar con 240 días de sol por año: lleva 1 día, no implica esfuerzo, y sí sirve para broncearse.
