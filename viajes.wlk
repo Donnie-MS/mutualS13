@@ -4,6 +4,7 @@ class Actividad {
     method implicaEsfuerzo()
     method puedeBroncearse()
     method esInteresante() = idiomas.size() > 1
+    method esActividadRecomendadaPara(unSocio) = self.esInteresante() and unSocio.leAtrae(self) and !unSocio.hizoActividad(self)
 }
 
 class ViajeDePlaya inherits Actividad {
@@ -71,12 +72,15 @@ una salida de 100 kilómetros a un lugar con 130 días de sol por año: lleva 2 
 una salida de 50 kilómetros a un lugar con 240 días de sol por año: lleva 1 día, no implica esfuerzo, y sí sirve para broncearse.
 una salida de 250 kilómetros a un lugar con 130 días de sol por año: lleva 5 días, implica esfuerzo, y sirve para broncearse.
 */
-
+/*
+Para las clases de gimnasia, la condición es que el socio tenga entre 20 y 30 años.
+*/
 class ClasesDeGimnasia inherits Actividad {
     override method idiomas() = #{"espaniol"}
     override method diasQueLleva() = 1
     override method implicaEsfuerzo() = true
     override method puedeBroncearse() = false
+    override method esActividadRecomendadaPara(unSocio) = unSocio.edad() >= 20 and unSocio.edad() <= 30 
 } 
 class Socio {
     const actividadesRealizadas = []
@@ -92,6 +96,7 @@ class Socio {
         }
         actividadesRealizadas.add(unaActividad)
     }
+    method hizoActividad(unaActividad) = actividadesRealizadas.contains(unaActividad)
     method leAtrae(unaActividad)
     method hablaAlMenosUnIdiomaDe(unaActividad) = self.idiomas().intersection(unaActividad.idiomas()).size() > 0
 }
@@ -105,7 +110,6 @@ class SocioCoherente inherits Socio {
 class SocioRelajado inherits Socio {
     override method leAtrae(unaActividad) = self.hablaAlMenosUnIdiomaDe(unaActividad)
 }
-
 
 /*
 roque.esAdoradorDelSol() devuelve true.
